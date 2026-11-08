@@ -1,0 +1,9 @@
+{
+  "name": "auto-policy",
+  "version": "0.1.0",
+  "description": "A local permission policy for auto mode, for proxies that cannot reach the auto-mode classifier.",
+  "author": {
+    "name": "liupengyu"
+  },
+  "license": "MIT"
+}

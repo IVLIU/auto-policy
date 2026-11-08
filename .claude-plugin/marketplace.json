@@ -1,0 +1,17 @@
+{
+  "name": "auto-policy",
+  "owner": {
+    "name": "liupengyu"
+  },
+  "metadata": {
+    "description": "A local permission policy for auto mode, for proxies that cannot reach the auto-mode classifier."
+  },
+  "plugins": [
+    {
+      "name": "auto-policy",
+      "source": "./",
+      "description": "Answers at tool.check so auto mode does not fall back to a prompt per action when ANTHROPIC_BASE_URL points at a gateway that cannot forward the classifier.",
+      "version": "0.1.0"
+    }
+  ]
+}
