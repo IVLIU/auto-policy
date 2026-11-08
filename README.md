@@ -32,7 +32,7 @@ Restart Claude Code, then check that `/permissions` shows auto mode.
 
 Deletes and moves; `sudo`; `launchctl` and `crontab`; `chmod`/`chown`; `kill`/`pkill`; `curl`, `wget`, `ssh`, `scp`, `rsync`; `npx` and global installs; `git push`, `reset --hard`, `clean`, `rebase`, `commit --amend`, branch and tag deletion, remote rewrites; reads and writes of `.ssh`, `.aws`, `.gnupg`, `.env`, `.npmrc`, `.netrc`, `id_rsa`; writes outside the session's working directory except under `~/.claude` and `/tmp`.
 
-The lists live in `hooks/register.tsx` as `RISKY` and `HARD`. Edit them and the mod reloads on the next turn.
+The lists live in `hooks/register.tsx` as `RISKY` and `HARD`. Edit them and restart Claude Code.
 
 ## Scope
 
