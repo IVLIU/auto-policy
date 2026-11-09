@@ -8,6 +8,25 @@ test('allows ordinary commands', async $ => {
   }
 })
 
+test('allows the usual stderr redirections', async $ => {
+  // `2>/dev/null` is in most shell lines; asking for it made every other call prompt.
+  for (const command of [
+    'ls .claude 2>/dev/null',
+    'cat package.json 2>/dev/null | head -40',
+    'grep -rn foo . 2> /dev/null',
+    'node x.js > /dev/null',
+    'node x.js >/dev/null 2>&1',
+    'ls /dev/disk*',
+  ]) {
+    expect((await check($, command)).decision).toBe('allow')
+  }
+})
+
+test('asks before writing a real device', async $ => {
+  expect((await check($, 'echo x > /dev/mem')).decision).toBe('ask')
+  expect((await check($, 'cat img > /dev/disk2')).decision).toBe('deny')
+})
+
 test('asks before irreversible git actions', async $ => {
   for (const command of ['git push origin main', 'git reset --hard HEAD~1', 'git clean -fd', 'git commit --amend', 'git branch -D old']) {
     expect((await check($, command)).decision).toBe('ask')

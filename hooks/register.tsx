@@ -43,12 +43,13 @@ const RISKY: ReadonlyArray<readonly [RegExp, string]> = [
 
   // privilege / system state
   [/\b(sudo|doas)\b/, 'escalates privileges'],
-  [/\b(dd|mkfs\w*|shutdown|reboot|halt|diskutil|hdiutil)\b/, 'disk or power operation'],
-  [/\b(launchctl|crontab|at)\s/, 'installs a persistent job'],
+  [/(^|[;&|(]\s*)dd\s/, 'writes raw disk blocks'],
+  [/\b(mkfs\w*|shutdown|reboot|halt|diskutil|hdiutil)\b/, 'disk or power operation'],
+  [/(^|[;&|(]\s*)(launchctl|crontab|at)\s/, 'installs a persistent job'],
   [/\b(systemsetup|networksetup|sysctl|csrutil|spctl|chflags)\b/, 'changes system configuration'],
   [/\bdefaults\s+write\b/, 'writes system preferences'],
   [/\b(pkill|killall)\b|\bkill\b/, 'ends a process'],
-  [/\bsecurity\b/, 'reads the keychain'],
+  [/\bsecurity\s+(find|dump|list|add|delete|import|export|authorize|unlock|create|set-)/, 'reads the keychain'],
 
   // git history / remote
   [/\bgit\s+push\b/, 'pushes to a remote'],
@@ -76,7 +77,8 @@ const RISKY: ReadonlyArray<readonly [RegExp, string]> = [
   // executing foreign content
   [/\|\s*(sh|bash|zsh)\b/, 'pipes into a shell'],
   [/\beval\b/, 'evaluates a string'],
-  [/>\s*\/dev\//, 'writes a device'],
+  // `2>/dev/null` and its siblings are ordinary; anything else under /dev is not
+  [/>\s*\/dev\/(?!null\b|stdout\b|stderr\b|stdin\b|tty\b|fd\/)/, 'writes a device'],
 
   // gui
   [/\bosascript\b/, 'drives another app'],
